@@ -18,7 +18,8 @@ namespace Mirror.Examples.NetworkRoom
             // spawn the initial batch of Rewards
             if (sceneName == GameplayScene)
             {
-                Spawner.InitialSpawn();
+                Vector3 spawnPosition = new Vector3(Random.Range(-19, 20), 1, Random.Range(-19, 20));
+                NetworkServer.Spawn(Object.Instantiate(rewardPrefab, spawnPosition, Quaternion.identity));
             }
         }
 
