@@ -20,7 +20,13 @@ namespace BrickBreaker
         [SerializeField] private float speed;
         /// <summary>The minimum and maximum x positions that the paddle can move to.</summary>
         [SerializeField] private Vector2 xMinMax;
+        /// <summary>The speed the paddle's collider returns to the center.</summary>
+        [SerializeField] private float offsetReturnSpeed = 20;
+        /// <summary>The amount of offset the collider based on latency.</summary>
+        [SerializeField] private float offsetMultiplier = 0.4f;
 
+        /// <summary>The current offset of the paddle's collider.</summary>
+        private float colliderOffset = 0;
 
         /// <summary>The y position of the top paddle.</summary>
         private static float topPaddleHeight = -3;
@@ -47,6 +53,22 @@ namespace BrickBreaker
                 float move = Input.GetAxisRaw("Horizontal") * speed;
                 float xPos = Mathf.Clamp(transform.localPosition.x + move * Time.fixedDeltaTime, xMinMax.x, xMinMax.y);
                 transform.localPosition = new Vector3(xPos, transform.localPosition.y, transform.localPosition.z);
+
+                // Send the server an offset to apply to the paddle's collider to account for some of the connection latency
+                CmdOffset((float)NetworkTime.rtt * move * offsetMultiplier);
+            }
+            else
+            {
+                // Lerp the offset back to 0
+                if (Mathf.Abs(colliderOffset) > 0)
+                {
+                    float sign = Mathf.Sign(colliderOffset);
+                    colliderOffset -= Time.fixedDeltaTime * offsetReturnSpeed * sign;
+                    if (colliderOffset * sign < 0) colliderOffset = 0;
+                }
+                // Limit the offset to the edges of the game
+                colliderOffset = Mathf.Clamp(colliderOffset, xMinMax.x - transform.localPosition.x, xMinMax.y - transform.localPosition.x);
+                col.offset = new Vector2(colliderOffset, 0);
             }
         }
 
@@ -60,6 +82,18 @@ namespace BrickBreaker
             if (GameManager.TopPlayer() == this)
             {
                 GameManager.FireBall();
+            }
+        }
+
+        /// <summary>
+        /// Called by the client to offset the paddle's collider on the server. Used to account for connection latency.
+        /// </summary>
+        [Command]
+        void CmdOffset(float newOffset)
+        {
+            if (Mathf.Abs(newOffset) > Mathf.Abs(colliderOffset))
+            {
+                colliderOffset = newOffset;
             }
         }
 

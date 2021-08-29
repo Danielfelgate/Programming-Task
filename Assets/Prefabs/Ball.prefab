@@ -211,7 +211,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   rb: {fileID: 8963141822722230245}
+  spriteObject: {fileID: 8963141822029052986}
   speed: 10
+  paddleOffset: 0.4
 --- !u!58 &8963141822722230246
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -285,7 +287,7 @@ MonoBehaviour:
   syncPosition: 1
   syncRotation: 0
   syncScale: 0
-  interpolatePosition: 1
+  interpolatePosition: 0
   interpolateRotation: 0
   interpolateScale: 0
   bufferTimeMultiplier: 3
