@@ -3,7 +3,7 @@
  
  A/D or Left/Right Arrow to move the paddle.
  Space to fire the ball.
- Designed for a 1080p display.
+ Designed for a 16/9 display or wider.
  
  When the ball is lost the players switch positions and the ball is returned to the top player.
  The game is reset when the host leaves or when both clients leave if the game is running on a dedicated server.
