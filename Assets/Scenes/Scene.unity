@@ -443,7 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showGUI: 1
   offsetX: 0
-  offsetY: 0
+  offsetY: 100
 --- !u!114 &95879692
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,6 +32,8 @@ namespace Mirror
             if (!showGUI) return;
 #pragma warning restore 618
 
+            GUI.contentColor = Color.black;
+            GUI.color = Color.white;
             GUILayout.BeginArea(new Rect(10 + offsetX, 40 + offsetY, 215, 9999));
             if (!NetworkClient.isConnected && !NetworkServer.active)
             {
