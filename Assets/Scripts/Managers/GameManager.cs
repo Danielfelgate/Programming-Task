@@ -42,6 +42,14 @@ namespace BrickBreaker
             _instance = this;
         }
 
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+
+            // Reset the score to 0
+            score = 0;
+        }
+
         public override void OnStartClient()
         {
             base.OnStartClient();
