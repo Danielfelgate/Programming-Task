@@ -68,8 +68,8 @@ namespace BrickBreaker
         {
             base.OnClientDisconnect(conn);
 
-            // Resets the score text when the client disconnects from the server
-            GameManager.ResetScoreText();
+            // Restart the game when disconnecting to respawn bricks and reset score
+            SceneManager.LoadScene(0);
         }
     }
 }

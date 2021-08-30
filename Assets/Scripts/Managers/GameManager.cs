@@ -76,14 +76,6 @@ namespace BrickBreaker
         }
 
         /// <summary>
-        /// Resets the score text to it's default value.
-        /// </summary>
-        public static void ResetScoreText()
-        {
-            if (_instance) _instance.scoreText.text = "Score: 0";
-        }
-
-        /// <summary>
         /// Adds a player to <see cref="players"/> list.
         /// </summary>
         [Server]
